@@ -48,7 +48,7 @@ function AdminDashboard() {
 
         const { data } =
           await axios.get(
-            "http://localhost:5000/api/admin/dashboard",
+            "https://furniselect-ai.onrender.com/api/admin/dashboard",
             {
               headers: {
                 Authorization:

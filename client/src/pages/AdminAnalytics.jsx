@@ -39,7 +39,7 @@ function AdminAnalytics() {
       const token = localStorage.getItem("token");
 
       const { data } = await axios.get(
-        `http://localhost:5000/api/admin/analytics?year=${year}`,
+        `https://furniselect-ai.onrender.com/api/admin/analytics?year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

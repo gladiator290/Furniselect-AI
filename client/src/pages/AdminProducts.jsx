@@ -21,7 +21,7 @@ function AdminProducts() {
 
         const { data } =
           await axios.get(
-            "http://localhost:5000/api/products"
+            "https://furniselect-ai.onrender.com/api/products"
           );
 
         setProducts(data);
@@ -68,7 +68,7 @@ function AdminProducts() {
         }
 
         await axios.delete(
-          `http://localhost:5000/api/products/${id}`,
+          `https://furniselect-ai.onrender.com/api/products/${id}`,
           {
             headers: {
               Authorization:

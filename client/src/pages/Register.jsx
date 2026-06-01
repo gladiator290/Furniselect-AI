@@ -40,7 +40,7 @@ function Register() {
 
       const { data } =
         await axios.post(
-          "http://localhost:5000/api/auth/register",
+          "https://furniselect-ai.onrender.com/api/auth/register",
           {
             name,
             email,

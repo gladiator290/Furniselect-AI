@@ -53,7 +53,7 @@ function Checkout() {
       const token = localStorage.getItem("token");
 
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/address",
+        "https://furniselect-ai.onrender.com/api/auth/address",
         {
           fullName,
           phone,
@@ -110,11 +110,11 @@ function Checkout() {
 
     try {
       const { data: keyData } = await axios.get(
-        "http://localhost:5000/api/payment/key",
+        "https://furniselect-ai.onrender.com/api/payment/key",
       );
 
       const { data: orderData } = await axios.post(
-        "http://localhost:5000/api/payment/create-order",
+        "https://furniselect-ai.onrender.com/api/payment/create-order",
         {
           amount: totalPrice,
         },
@@ -137,7 +137,7 @@ function Checkout() {
 
           if (isCartCheckout) {
             await axios.post(
-              "http://localhost:5000/api/orders",
+              "https://furniselect-ai.onrender.com/api/orders",
               {
                 shippingAddress: addresses[selectedAddress],
               },
@@ -149,7 +149,7 @@ function Checkout() {
             );
           } else {
             await axios.post(
-              "http://localhost:5000/api/orders",
+              "https://furniselect-ai.onrender.com/api/orders",
               {
                 buyNowProduct: product._id,
 

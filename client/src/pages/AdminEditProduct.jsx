@@ -30,7 +30,7 @@ function AdminEditProduct() {
   const fetchProduct = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/products/${id}`,
+        `https://furniselect-ai.onrender.com/api/products/${id}`,
       );
 
       setTitle(data.title);
@@ -95,7 +95,7 @@ function AdminEditProduct() {
         formData.append("image", image);
       }
 
-      await axios.put(`http://localhost:5000/api/products/${id}`, formData, {
+      await axios.put(`https://furniselect-ai.onrender.com/api/products/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

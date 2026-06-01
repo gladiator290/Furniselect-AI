@@ -54,7 +54,7 @@ function Profile() {
 
       if (editingIndex !== null) {
         response = await axios.put(
-          `http://localhost:5000/api/auth/address/${editingIndex}`,
+          `https://furniselect-ai.onrender.com/api/auth/address/${editingIndex}`,
           {
             fullName,
             phone,
@@ -72,7 +72,7 @@ function Profile() {
         );
       } else {
         response = await axios.post(
-          "http://localhost:5000/api/auth/address",
+          "https://furniselect-ai.onrender.com/api/auth/address",
           {
             fullName,
             phone,
@@ -141,7 +141,7 @@ function Profile() {
   const deleteAddress = async (index) => {
     const token = localStorage.getItem("token");
 
-    await axios.delete(`http://localhost:5000/api/auth/address/${index}`, {
+    await axios.delete(`https://furniselect-ai.onrender.com/api/auth/address/${index}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

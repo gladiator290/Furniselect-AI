@@ -45,7 +45,7 @@ function AiRoom() {
       formData.append("image", image);
 
       const { data } = await axios.post(
-        "http://localhost:5000/api/ai/analyze-room",
+        "https://furniselect-ai.onrender.com/api/ai/analyze-room",
         formData,
       );
 
@@ -68,7 +68,7 @@ function AiRoom() {
       }
 
       await axios.post(
-        "http://localhost:5000/api/cart",
+        "https://furniselect-ai.onrender.com/api/cart",
 
         {
           product: productId,
@@ -111,7 +111,7 @@ function AiRoom() {
       }
 
       await axios.post(
-        "http://localhost:5000/api/cart",
+        "https://furniselect-ai.onrender.com/api/cart",
 
         {
           product: productId,

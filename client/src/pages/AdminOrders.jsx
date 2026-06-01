@@ -29,7 +29,7 @@ function AdminOrders() {
 
       const { data } =
         await axios.get(
-          "http://localhost:5000/api/orders/admin",
+          "https://furniselect-ai.onrender.com/api/orders/admin",
           {
             headers: {
               Authorization:
@@ -57,7 +57,7 @@ function AdminOrders() {
           );
 
         await axios.put(
-          `http://localhost:5000/api/orders/admin/${orderId}/approve`,
+          `https://furniselect-ai.onrender.com/api/orders/admin/${orderId}/approve`,
           {},
           {
             headers: {
@@ -86,7 +86,7 @@ function AdminOrders() {
           );
 
         await axios.put(
-          `http://localhost:5000/api/orders/admin/${orderId}/reject`,
+          `https://furniselect-ai.onrender.com/api/orders/admin/${orderId}/reject`,
           {},
           {
             headers: {
@@ -115,7 +115,7 @@ function AdminOrders() {
           );
 
         await axios.put(
-          `http://localhost:5000/api/orders/admin/${orderId}/ship`,
+          `https://furniselect-ai.onrender.com/api/orders/admin/${orderId}/ship`,
           {},
           {
             headers: {
@@ -144,7 +144,7 @@ function AdminOrders() {
           );
 
         await axios.put(
-          `http://localhost:5000/api/orders/admin/${orderId}/deliver`,
+          `https://furniselect-ai.onrender.com/api/orders/admin/${orderId}/deliver`,
           {},
           {
             headers: {
@@ -178,7 +178,7 @@ function AdminOrders() {
           );
 
         await axios.put(
-          `http://localhost:5000/api/orders/admin/${orderId}/cancel`,
+          `https://furniselect-ai.onrender.com/api/orders/admin/${orderId}/cancel`,
           {
             reason,
           },
@@ -209,7 +209,7 @@ function AdminOrders() {
           );
 
         await axios.put(
-          `http://localhost:5000/api/orders/admin/${orderId}/approve-cancel`,
+          `https://furniselect-ai.onrender.com/api/orders/admin/${orderId}/approve-cancel`,
           {},
           {
             headers: {
@@ -238,7 +238,7 @@ function AdminOrders() {
           );
 
         await axios.put(
-          `http://localhost:5000/api/orders/admin/${orderId}/reject-cancel`,
+          `https://furniselect-ai.onrender.com/api/orders/admin/${orderId}/reject-cancel`,
           {},
           {
             headers: {
@@ -267,7 +267,7 @@ function AdminOrders() {
           );
 
         await axios.put(
-          `http://localhost:5000/api/orders/admin/${orderId}/approve-return`,
+          `https://furniselect-ai.onrender.com/api/orders/admin/${orderId}/approve-return`,
           {},
           {
             headers: {
@@ -296,7 +296,7 @@ function AdminOrders() {
           );
 
         await axios.put(
-          `http://localhost:5000/api/orders/admin/${orderId}/reject-return`,
+          `https://furniselect-ai.onrender.com/api/orders/admin/${orderId}/reject-return`,
           {},
           {
             headers: {

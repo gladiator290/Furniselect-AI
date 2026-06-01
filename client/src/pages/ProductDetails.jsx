@@ -24,14 +24,14 @@ function ProductDetails() {
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:5000/api/products/${id}`
+          `https://furniselect-ai.onrender.com/api/products/${id}`
         );
 
         setProduct(data);
 
         const relatedResponse =
           await axios.get(
-            `http://localhost:5000/api/products/${id}/related`
+            `https://furniselect-ai.onrender.com/api/products/${id}/related`
           );
 
         setRelatedProducts(
@@ -56,7 +56,7 @@ function ProductDetails() {
       }
 
       await axios.post(
-        "http://localhost:5000/api/cart",
+        "https://furniselect-ai.onrender.com/api/cart",
         {
           product: product._id,
           quantity: 1,
@@ -98,7 +98,7 @@ function ProductDetails() {
       }
 
       await axios.post(
-        `http://localhost:5000/api/products/${id}/review`,
+        `https://furniselect-ai.onrender.com/api/products/${id}/review`,
         {
           rating,
           comment,

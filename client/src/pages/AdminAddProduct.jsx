@@ -46,7 +46,7 @@ function AdminAddProduct() {
 
       formData.append("image", image);
 
-      await axios.post("http://localhost:5000/api/products", formData, {
+      await axios.post("https://furniselect-ai.onrender.com/api/products", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

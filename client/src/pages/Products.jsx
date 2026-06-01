@@ -31,7 +31,7 @@ function Products() {
 
           const { data } =
             await axios.get(
-              `http://localhost:5000/api/products?search=${search}`
+              `https://furniselect-ai.onrender.com/api/products?search=${search}`
             );
 
           setProducts(data);

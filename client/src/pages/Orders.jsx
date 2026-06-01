@@ -22,7 +22,7 @@ function Orders() {
         return;
       }
 
-      const { data } = await axios.get("http://localhost:5000/api/orders", {
+      const { data } = await axios.get("https://furniselect-ai.onrender.com/api/orders", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,7 +59,7 @@ function Orders() {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        `http://localhost:5000/api/orders/${id}/cancel-request`,
+        `https://furniselect-ai.onrender.com/api/orders/${id}/cancel-request`,
         {
           reason,
         },
@@ -101,7 +101,7 @@ function Orders() {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        `http://localhost:5000/api/orders/${id}/return-request`,
+        `https://furniselect-ai.onrender.com/api/orders/${id}/return-request`,
         {
           reason,
         },

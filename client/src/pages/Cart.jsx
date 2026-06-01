@@ -12,7 +12,7 @@ function Cart() {
       try {
         const token = localStorage.getItem("token");
 
-        const { data } = await axios.get("http://localhost:5000/api/cart", {
+        const { data } = await axios.get("https://furniselect-ai.onrender.com/api/cart", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -42,7 +42,7 @@ function Cart() {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        `http://localhost:5000/api/cart/increase/${id}`,
+        `https://furniselect-ai.onrender.com/api/cart/increase/${id}`,
         {},
         {
           headers: {
@@ -51,7 +51,7 @@ function Cart() {
         },
       );
 
-      const { data } = await axios.get("http://localhost:5000/api/cart", {
+      const { data } = await axios.get("https://furniselect-ai.onrender.com/api/cart", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -71,7 +71,7 @@ function Cart() {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        `http://localhost:5000/api/cart/decrease/${id}`,
+        `https://furniselect-ai.onrender.com/api/cart/decrease/${id}`,
         {},
         {
           headers: {
@@ -80,7 +80,7 @@ function Cart() {
         },
       );
 
-      const { data } = await axios.get("http://localhost:5000/api/cart", {
+      const { data } = await axios.get("https://furniselect-ai.onrender.com/api/cart", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
