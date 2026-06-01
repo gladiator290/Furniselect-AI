@@ -33,7 +33,7 @@ router.get("/:id/related", getRelatedProducts);
 
 router.get("/:id", getSingleProduct);
 
-router.put("/:id", protect, admin, updateProduct);
+router.put("/:id", protect, admin, upload.single("image"),updateProduct);
 
 router.delete("/:id", protect, admin, deleteProduct);
 
