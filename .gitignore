@@ -1,0 +1,11 @@
+node_modules/
+venv/
+.env
+dist/
+build/
+__pycache__/
+structure.txt
+structure_clean.txt
+ai-service/venv/
+client/node_modules/
+server/node_modules/
