@@ -83,7 +83,7 @@ const createProduct = async (req, res) => {
 
         const aiResponse =
           await axios.post(
-            "http://127.0.0.1:8000/analyze-room",
+            "http://127.0.0.1:8000/analyze-product",
             formData,
             {
               headers:
@@ -91,8 +91,11 @@ const createProduct = async (req, res) => {
             }
           );
 
-        detectedTags =
-          aiResponse.data.tags || [];
+        detectedTags = [
+          ...(aiResponse.data.tags || []),
+
+          req.body.category
+        ];
 
       } catch (error) {
 

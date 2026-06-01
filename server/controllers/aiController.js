@@ -19,7 +19,7 @@ const analyzeRoom = async (req, res) => {
 
 
 
-    
+
     const formData = new FormData();
 
     formData.append(
@@ -30,7 +30,7 @@ const analyzeRoom = async (req, res) => {
 
 
 
-    
+
     const aiResponse = await axios.post(
       "http://127.0.0.1:8000/analyze-room",
       formData,
@@ -41,22 +41,57 @@ const analyzeRoom = async (req, res) => {
 
 
 
-    
+
     const aiData = aiResponse.data;
 
 
 
-    
-    const matchedProducts =
-      await Product.find({
-        tags: {
-          $in: aiData.tags,
-        },
+
+    const products =
+      await Product.find();
+
+    const scoredProducts =
+      products.map((product) => {
+
+        let score = 0;
+
+        product.tags.forEach((tag) => {
+
+          if (
+            aiData.tags.includes(tag)
+          ) {
+
+            score++;
+          }
+        });
+
+        return {
+
+          ...product.toObject(),
+
+          matchScore: score,
+        };
       });
 
+    const matchedProducts =
+      scoredProducts
+
+        .filter(
+          (product) =>
+            product.matchScore > 0
+        )
+
+        .sort(
+          (a, b) =>
+            b.matchScore -
+            a.matchScore
+        )
+
+        .slice(0, 6);
 
 
-    
+
+
     res.status(200).json({
 
       ...aiData,

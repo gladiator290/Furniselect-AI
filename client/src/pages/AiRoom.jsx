@@ -45,7 +45,7 @@ function AiRoom() {
       formData.append("image", image);
 
       const { data } = await axios.post(
-        "https://furniselect-ai.onrender.com/api/ai/analyze-room",
+        "http://localhost:5000/api/ai/analyze-room",
         formData,
       );
 
@@ -68,7 +68,7 @@ function AiRoom() {
       }
 
       await axios.post(
-        "https://furniselect-ai.onrender.com/api/cart",
+        "http://localhost:5000/api/cart",
 
         {
           product: productId,
@@ -111,7 +111,7 @@ function AiRoom() {
       }
 
       await axios.post(
-        "https://furniselect-ai.onrender.com/api/cart",
+        "http://localhost:5000/api/cart",
 
         {
           product: productId,
@@ -196,44 +196,60 @@ function AiRoom() {
                   Room Analysis
                 </h2>
 
-                <div className="mt-6 space-y-4">
-                  <p className="text-lg">
-                    <span className="font-semibold">Style:</span> {result.style}
-                  </p>
+                <div className="mt-8 grid grid-cols-2 gap-4">
+                  <div className="bg-[#f8f5f0] p-4 rounded-2xl">
+                    <p className="text-sm text-gray-500">Style</p>
+                    <p className="font-bold text-lg">{result.style}</p>
+                  </div>
 
-                  <p className="text-lg">
-                    <span className="font-semibold">Tone:</span> {result.tone}
-                  </p>
+                  <div className="bg-[#f8f5f0] p-4 rounded-2xl">
+                    <p className="text-sm text-gray-500">Room Type</p>
+                    <p className="font-bold text-lg">{result.room_type}</p>
+                  </div>
 
-                  <p className="text-lg">
-                    <span className="font-semibold">Brightness:</span>{" "}
-                    {result.brightness}
-                  </p>
-                </div>
-              </div>
+                  <div className="bg-[#f8f5f0] p-4 rounded-2xl">
+                    <p className="text-sm text-gray-500">Tone</p>
+                    <p className="font-bold text-lg">{result.tone}</p>
+                  </div>
 
-              <div className="bg-white rounded-3xl p-8 shadow-lg">
-                <h2 className="text-3xl font-bold text-[#3e2f25]">
-                  AI Recommendations
-                </h2>
-
-                <div className="mt-6 flex flex-wrap gap-3">
-                  {result.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="bg-[#e7d7c9] text-[#5c3d2e] px-4 py-2 rounded-full font-medium"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                  <div className="bg-[#f8f5f0] p-4 rounded-2xl">
+                    <p className="text-sm text-gray-500">Mood</p>
+                    <p className="font-bold text-lg">{result.mood}</p>
+                  </div>
                 </div>
 
-                <div className="mt-8 space-y-4">
-                  {result.recommendations.map((item, index) => (
-                    <div key={index} className="bg-[#f8f5f0] p-4 rounded-2xl">
-                      {item}
-                    </div>
-                  ))}
+                <div className="mt-8">
+                  <div className="flex justify-between mb-2">
+                    <span className="font-medium">Confidence</span>
+
+                    <span>{result.confidence}%</span>
+                  </div>
+
+                  <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div
+                      className="bg-[#5c3d2e] h-3 rounded-full"
+                      style={{
+                        width: `${result.confidence}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <h3 className="font-semibold text-lg mb-3">Color Palette</h3>
+
+                  <div className="flex gap-3">
+                    {result.palette?.map((color, index) => (
+                      <div
+                        key={index}
+                        title={color}
+                        className="w-12 h-12 rounded-xl border"
+                        style={{
+                          backgroundColor: color,
+                        }}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
