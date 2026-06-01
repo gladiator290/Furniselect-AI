@@ -95,12 +95,18 @@ function AdminEditProduct() {
         formData.append("image", image);
       }
 
-      await axios.put(`https://furniselect-ai.onrender.com/api/products/${id}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
+      const response = await axios.put(
+        `https://furniselect-ai.onrender.com/api/products/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
         },
-      });
+      );
+
+      console.log("UPDATE RESPONSE:", response.data);
 
       await Swal.fire({
         icon: "success",

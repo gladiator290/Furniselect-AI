@@ -28,7 +28,7 @@ const createProduct = async (req, res) => {
 
 
 
-      
+
       const streamUpload = () => {
 
         return new Promise((resolve, reject) => {
@@ -60,14 +60,14 @@ const createProduct = async (req, res) => {
 
 
 
-      
+
       const result = await streamUpload();
 
       imageUrl = result.secure_url;
 
 
 
-      
+
       const formData = new FormData();
 
       formData.append(
@@ -78,36 +78,36 @@ const createProduct = async (req, res) => {
 
 
 
-      
-try {
 
-  const aiResponse =
-    await axios.post(
-      "http://127.0.0.1:8000/analyze-room",
-      formData,
-      {
-        headers:
-          formData.getHeaders(),
+      try {
+
+        const aiResponse =
+          await axios.post(
+            "http://127.0.0.1:8000/analyze-room",
+            formData,
+            {
+              headers:
+                formData.getHeaders(),
+            }
+          );
+
+        detectedTags =
+          aiResponse.data.tags || [];
+
+      } catch (error) {
+
+        console.log(
+          "AI Server Not Running"
+        );
+
+        detectedTags = [];
       }
-    );
-
-  detectedTags =
-    aiResponse.data.tags || [];
-
-} catch (error) {
-
-  console.log(
-    "AI Server Not Running"
-  );
-
-  detectedTags = [];
-}
-      }
+    }
 
 
 
 
-    
+
     const product = await Product.create({
 
       ...req.body,
@@ -140,27 +140,27 @@ const getProducts = async (req, res) => {
 
     const keyword = req.query.search
       ? {
-          $or: [
-            {
-              title: {
-                $regex: req.query.search,
-                $options: "i",
-              },
+        $or: [
+          {
+            title: {
+              $regex: req.query.search,
+              $options: "i",
             },
-            {
-              category: {
-                $regex: req.query.search,
-                $options: "i",
-              },
+          },
+          {
+            category: {
+              $regex: req.query.search,
+              $options: "i",
             },
-            {
-              tags: {
-                $regex: req.query.search,
-                $options: "i",
-              },
+          },
+          {
+            tags: {
+              $regex: req.query.search,
+              $options: "i",
             },
-          ],
-        }
+          },
+        ],
+      }
       : {};
 
     const products =
@@ -325,11 +325,11 @@ const updateProduct = async (req, res) => {
 
   } catch (error) {
 
-    console.log(error);
+    console.log("ERROR MESSAGE:", error.message);
+    console.log("ERROR STACK:", error.stack);
 
     res.status(500).json({
-      message:
-        error.message,
+      message: error.message,
     });
   }
 };
