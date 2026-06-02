@@ -32,7 +32,7 @@ const analyzeRoom = async (req, res) => {
 
 
     const aiResponse = await axios.post(
-      "process.env.AI_SERVICE_URL/analyze-room", 
+      `${process.env.AI_SERVICE_URL}/analyze-room`, 
       formData,
       {
         headers: formData.getHeaders(),
