@@ -254,81 +254,79 @@ function AiRoom() {
               </div>
             </div>
             {result.recommendedProducts &&
-              result.recommendedProducts.length > 0 ?(
-                <div className="mt-16">
-                  <h2 className="text-4xl font-bold text-[#3e2f25]">
-                    Recommended Products
-                  </h2>
+            result.recommendedProducts.length > 0 ? (
+              <div className="mt-16">
+                <h2 className="text-4xl font-bold text-[#3e2f25]">
+                  Recommended Products
+                </h2>
 
-                  <div className="grid md:grid-cols-3 gap-8 mt-8">
-                    {result.recommendedProducts.map((product) => (
-                      <div
-                        key={product._id}
-                        className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition"
-                      >
-                        <img
-                          src={product.image}
-                          alt={product.title}
-                          className="w-full h-72 object-cover"
-                        />
+                <div className="grid md:grid-cols-3 gap-8 mt-8">
+                  {result.recommendedProducts.map((product) => (
+                    <div
+                      key={product._id}
+                      className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition"
+                    >
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        className="w-full h-72 object-cover"
+                      />
 
-                        <div className="p-6">
-                          <h3 className="text-2xl font-semibold">
-                            {product.title}
-                          </h3>
+                      <div className="p-6">
+                        <h3 className="text-2xl font-semibold">
+                          {product.title}
+                        </h3>
 
-                          <p className="mt-2 text-gray-600">
-                            {product.category}
-                          </p>
+                        <p className="mt-2 text-gray-600">{product.category}</p>
 
-                          <p className="mt-4 text-2xl font-bold text-[#5c3d2e]">
-                            ₹{product.price}
-                          </p>
+                        <p className="mt-4 text-2xl font-bold text-[#5c3d2e]">
+                          ₹{product.price}
+                        </p>
 
-                          <div className="mt-4 flex flex-wrap gap-2">
-                            {product.tags.map((tag, index) => (
-                              <span
-                                key={index}
-                                className="bg-[#f1e4d8] text-[#5c3d2e] px-3 py-1 rounded-full text-sm"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-
-                          <div className="mt-6 flex gap-3">
-                            <button
-                              onClick={() => addToCart(product._id)}
-                              className="flex-1 bg-[#5c3d2e] text-white py-3 rounded-xl hover:bg-[#4a3125] transition"
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {product.tags.map((tag, index) => (
+                            <span
+                              key={index}
+                              className="bg-[#f1e4d8] text-[#5c3d2e] px-3 py-1 rounded-full text-sm"
                             >
-                              Add to Cart
-                            </button>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
 
-                            <button
-                              onClick={() => buyNow(product._id)}
-                              className="flex-1 border border-[#5c3d2e] text-[#5c3d2e] py-3 rounded-xl hover:bg-[#f3ebe3] transition"
-                            >
-                              Buy Now
-                            </button>
-                          </div>
+                        <div className="mt-6 flex gap-3">
+                          <button
+                            onClick={() => addToCart(product._id)}
+                            className="flex-1 bg-[#5c3d2e] text-white py-3 rounded-xl hover:bg-[#4a3125] transition"
+                          >
+                            Add to Cart
+                          </button>
+
+                          <button
+                            onClick={() => buyNow(product._id)}
+                            className="flex-1 border border-[#5c3d2e] text-[#5c3d2e] py-3 rounded-xl hover:bg-[#f3ebe3] transition"
+                          >
+                            Buy Now
+                          </button>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              ) : (
-  <div className="mt-16">
-    <h2 className="text-4xl font-bold text-[#3e2f25]">
-      Recommended Products
-    </h2>
+              </div>
+            ) : (
+              <div className="mt-16">
+                <h2 className="text-4xl font-bold text-[#3e2f25]">
+                  Recommended Products
+                </h2>
 
-    <div className="bg-white rounded-3xl p-8 shadow-lg mt-8 text-center">
-      <p className="text-xl text-gray-600">
-        No related products found for this room style.
-      </p>
-    </div>
-  </div>
-)}
+                <div className="bg-white rounded-3xl p-8 shadow-lg mt-8 text-center">
+                  <p className="text-xl text-gray-600">
+                    No related products found for this room style.
+                  </p>
+                </div>
+              </div>
+            )}
             {result.recommendations && result.recommendations.length > 0 && (
               <div className="mt-16">
                 <h2 className="text-4xl font-bold text-[#3e2f25]">
