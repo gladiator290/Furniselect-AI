@@ -45,7 +45,7 @@ function AiRoom() {
       formData.append("image", image);
 
       const { data } = await axios.post(
-        "https://furniselect-ai-1.onrender.com/analyze-room",
+        "https://furniselect.onrender.com/api/ai/analyze-room",
         formData,
       );
 
@@ -253,9 +253,8 @@ function AiRoom() {
                 </div>
               </div>
             </div>
-
             {result.recommendedProducts &&
-              result.recommendedProducts.length > 0 && (
+              result.recommendedProducts.length > 0 ?(
                 <div className="mt-16">
                   <h2 className="text-4xl font-bold text-[#3e2f25]">
                     Recommended Products
@@ -317,7 +316,39 @@ function AiRoom() {
                     ))}
                   </div>
                 </div>
-              )}
+              ) : (
+  <div className="mt-16">
+    <h2 className="text-4xl font-bold text-[#3e2f25]">
+      Recommended Products
+    </h2>
+
+    <div className="bg-white rounded-3xl p-8 shadow-lg mt-8 text-center">
+      <p className="text-xl text-gray-600">
+        No related products found for this room style.
+      </p>
+    </div>
+  </div>
+)}
+            {result.recommendations && result.recommendations.length > 0 && (
+              <div className="mt-16">
+                <h2 className="text-4xl font-bold text-[#3e2f25]">
+                  AI Recommendations
+                </h2>
+
+                <div className="grid md:grid-cols-3 gap-6 mt-8">
+                  {result.recommendations.map((item, index) => (
+                    <div
+                      key={index}
+                      className="bg-white rounded-3xl p-6 shadow-lg"
+                    >
+                      <h3 className="text-xl font-semibold text-[#5c3d2e]">
+                        {item}
+                      </h3>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}{" "}
           </>
         )}
       </div>
