@@ -3,6 +3,8 @@ from PIL import Image
 import numpy as np
 import io
 from sklearn.cluster import KMeans
+from fastapi.middleware.cors import CORSMiddleware
+
 
 from ai_utils import (
     extract_palette,
@@ -16,6 +18,17 @@ from room_detector import detect_room_type
 
 app = FastAPI()
 
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://furniselect-ai.vercel.app"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def home():
