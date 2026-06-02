@@ -32,7 +32,7 @@ const analyzeRoom = async (req, res) => {
 
 
     const aiResponse = await axios.post(
-      "http://127.0.0.1:8000/analyze-room",
+      "process.env.AI_SERVICE_URL/analyze-room",
       formData,
       {
         headers: formData.getHeaders(),

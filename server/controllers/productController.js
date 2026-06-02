@@ -83,7 +83,7 @@ const createProduct = async (req, res) => {
 
         const aiResponse =
           await axios.post(
-            "http://127.0.0.1:8000/analyze-product",
+            "process.env.AI_SERVICE_URL/analyze-product",
             formData,
             {
               headers:
