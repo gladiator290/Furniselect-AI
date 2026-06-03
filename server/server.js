@@ -31,6 +31,7 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/admin", adminRoutes);
 
 app.get("/health", (req, res) => {
+  console.log("Health hit", new Date().toISOString());
   res.status(200).json({
     status: "OK",
     uptime: process.uptime(),
