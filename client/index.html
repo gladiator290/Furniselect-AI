@@ -1,14 +1,108 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Mobile Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>client</title>
-  </head>
-  <body>
+
+    <!-- Primary SEO -->
+    <title>FurniSelect | AI-Powered Furniture Marketplace</title>
+
+    <meta
+        name="description"
+        content="Discover, compare and buy furniture with AI-powered recommendations. FurniSelect helps you find the perfect furniture for your home with smart search and personalized suggestions."
+    />
+
+    <meta
+        name="keywords"
+        content="furniture marketplace, AI furniture, home decor, sofa, table, chair, interior design, furniture shopping, FurniSelect"
+    />
+
+    <meta name="author" content="Om Bhalla" />
+
+    <!-- Search Engine Indexing -->
+    <meta name="robots" content="index, follow" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Open Graph (LinkedIn, Facebook, WhatsApp) -->
+    <meta
+        property="og:title"
+        content="FurniSelect | AI-Powered Furniture Marketplace"
+    />
+
+    <meta
+        property="og:description"
+        content="Find the perfect furniture with AI-powered recommendations and smart product discovery."
+    />
+
+    <meta
+        property="og:image"
+        content="https://furniselect-ai.vercel.app/thumbnail.png"
+    />
+
+    <meta
+        property="og:url"
+        content="https://furniselect-ai.vercel.app/"
+    />
+
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Cards -->
+    <meta
+        name="twitter:card"
+        content="summary_large_image"
+    />
+
+    <meta
+        name="twitter:title"
+        content="FurniSelect | AI-Powered Furniture Marketplace"
+    />
+
+    <meta
+        name="twitter:description"
+        content="Find the perfect furniture with AI-powered recommendations."
+    />
+
+    <meta
+        name="twitter:image"
+        content="https://furniselect-ai.vercel.app/thumbnail.png"
+    />
+
+    <!-- Canonical URL -->
+    <link
+        rel="canonical"
+        href="https://furniselect-ai.vercel.app/"
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "FurniSelect",
+      "url": "https://furniselect-ai.vercel.app/",
+      "description": "AI-powered furniture marketplace with smart recommendations.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://furniselect-ai.vercel.app//search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+</head>
+
+<body>
     <div id="root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Razorpay -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  </body>
+</body>
 </html>
