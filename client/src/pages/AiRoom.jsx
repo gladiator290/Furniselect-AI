@@ -210,9 +210,12 @@ function AiRoom() {
               <img
                 src={preview}
                 alt="Uploaded room preview"
-                className="max-h-[500px] w-full object-cover"
+                className={`analysis-image max-h-[500px] w-full object-cover ${loading ? "is-scanning" : ""}`}
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#d9a274]/10 to-transparent" />
+              <div className="ai-scan-overlay pointer-events-none absolute inset-0">
+                <div className="ai-scan-grid" />
+                {loading && <><div className="ai-scan-beam" /><div className="ai-scan-crosshair" /><span className="ai-scan-corner corner-tl" /><span className="ai-scan-corner corner-tr" /><span className="ai-scan-corner corner-bl" /><span className="ai-scan-corner corner-br" /><div className="ai-scan-readout readout-top">ROOM VISION // LIVE</div><div className="ai-scan-readout readout-bottom">DEPTH MAP · OBJECTS · LIGHT</div></>}
+              </div>
               {loading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-[#211a16]/45 backdrop-blur-[2px]">
                   <div className="w-[min(88%,520px)] rounded-2xl border border-[#d9a274]/45 bg-[#211a16]/85 p-5 text-white shadow-2xl">
