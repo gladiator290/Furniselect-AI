@@ -27,7 +27,20 @@ def _scene_features(image):
     vertical_split = abs(top_brightness - bottom_brightness)
     color_spread = float(pixels.reshape(-1, 3).std(axis=0).mean())
 
-    return edge_energy, block_spread, vertical_split, color_spread
+    # Marketing creatives and portraits often have a large skin-tone region.
+    # A room photo may contain a person, but a dominant face/person is not a
+    # useful basis for furniture matching, so treat it as a non-room upload.
+    red, green, blue = pixels[:, :, 0], pixels[:, :, 1], pixels[:, :, 2]
+    skin_mask = (
+        (red > 0.34)
+        & (green > 0.18)
+        & (blue > 0.10)
+        & (red > green * 1.12)
+        & (green > blue * 1.08)
+    )
+    skin_ratio = float(skin_mask.mean())
+
+    return edge_energy, block_spread, vertical_split, color_spread, skin_ratio
 
 
 def detect_room(image):
@@ -35,7 +48,15 @@ def detect_room(image):
     if width < 240 or height < 180:
         return {"is_room": False, "room_type": "Not a room", "confidence": 0, "reason": "Image is too small"}
 
-    edge_energy, block_spread, vertical_split, color_spread = _scene_features(image)
+    edge_energy, block_spread, vertical_split, color_spread, skin_ratio = _scene_features(image)
+
+    if skin_ratio >= 0.035:
+        return {
+            "is_room": False,
+            "room_type": "Not a room",
+            "confidence": 94,
+            "reason": "This looks like a portrait or promotional graphic. Please upload a clear photo of the room interior.",
+        }
 
     # Scene-level score. The thresholds are deliberately conservative enough
     # to reject blank images, screenshots and close-up objects without adding
@@ -80,6 +101,7 @@ def detect_room(image):
             "scene_detail": round(edge_energy, 3),
             "spatial_variation": round(block_spread, 3),
             "layout_split": round(vertical_split, 3),
+            "human_presence": round(skin_ratio, 3),
         },
     }
 
