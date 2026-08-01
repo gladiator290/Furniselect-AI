@@ -140,7 +140,7 @@ function Register() {
 
           <button
             type="submit"
-            className="w-full bg-[#7b4f2c] text-white py-4 rounded-xl hover:bg-[#5c3b1e] transition font-semibold"
+            className="w-full rounded-xl bg-[#9a6038] py-4 font-semibold text-white transition hover:bg-[#7d4829]"
           >
             Register
           </button>

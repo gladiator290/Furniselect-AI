@@ -224,15 +224,15 @@ function ProductDetails() {
               </div>
             )}
 
-            <div className="mt-10 flex gap-4">
+            <div className="mt-10 flex flex-wrap gap-3">
 
   <button
     disabled={product.stock === 0}
     onClick={handleAddToCart}
-    className={`px-8 py-4 rounded-xl transition ${
+    className={`min-w-[150px] flex-1 px-6 py-4 rounded-xl transition ${
       product.stock === 0
         ? "bg-gray-400 cursor-not-allowed text-white"
-        : "bg-black text-white hover:bg-gray-800"
+        : "bg-[#9a6038] text-white hover:bg-[#7d4829]"
     }`}
   >
     {product.stock === 0
@@ -243,10 +243,10 @@ function ProductDetails() {
   <button
     disabled={product.stock === 0}
     onClick={handleBuyNow}
-    className={`px-8 py-4 rounded-xl transition ${
+    className={`min-w-[150px] flex-1 px-6 py-4 rounded-xl transition ${
       product.stock === 0
         ? "bg-gray-400 cursor-not-allowed text-white"
-        : "bg-[#7b4f2c] text-white hover:bg-[#5f3c20]"
+        : "bg-[#26221f] text-white hover:bg-[#9a6038]"
     }`}
   >
     {product.stock === 0

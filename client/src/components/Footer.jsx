@@ -13,7 +13,7 @@ function Footer() {
 
   return (
 
-    <footer className="bg-[#1f1a17] text-white">
+    <footer className="bg-[#211a16] text-white">
 
       <div className="max-w-7xl mx-auto px-6 py-20">
 

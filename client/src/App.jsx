@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import Navbar from "./components/Navbar";
@@ -23,9 +25,20 @@ import AdminEditProduct from "./pages/AdminEditProduct";
 import AdminOrders from "./pages/AdminOrders";
 import AdminAnalytics from "./pages/AdminAnalytics";
 
+function ScrollToTop() {
+  const { pathname, search } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname, search]);
+
+  return null;
+}
+
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Toaster position="top-right" />
 
       <Navbar />

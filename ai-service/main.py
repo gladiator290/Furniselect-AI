@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from PIL import Image
 import numpy as np
 import io
@@ -14,7 +14,7 @@ from ai_utils import (
     get_recommendations
 )
 
-from room_detector import detect_room_type
+from room_detector import detect_room
 
 app = FastAPI()
 
@@ -173,7 +173,19 @@ async def analyze_room(
         io.BytesIO(contents)
     ).convert("RGB")
 
-    room_type = detect_room_type(img) 
+    room_check = detect_room(img)
+
+    if not room_check["is_room"]:
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "code": "NOT_A_ROOM",
+                "message": room_check["reason"],
+                "room_type": "Not a room",
+            },
+        )
+
+    room_type = room_check["room_type"]
 
     img = img.resize((150, 150))
 
@@ -242,7 +254,7 @@ async def analyze_room(
         )
     )
 
-    confidence = 85
+    confidence = room_check["confidence"]
 
     return {
 
@@ -253,6 +265,8 @@ async def analyze_room(
         "mood": mood,
 
         "room_type": room_type,
+
+        "room_detected": True,
 
         "confidence": confidence,
 
@@ -286,5 +300,7 @@ async def analyze_room(
         ],
 
         "recommendations":
-            recommendations
+            recommendations,
+
+        "detection": room_check.get("signals", {}),
     }

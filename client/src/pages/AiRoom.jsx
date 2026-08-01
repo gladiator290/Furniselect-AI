@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 
@@ -15,15 +15,55 @@ function AiRoom() {
 
   const [result, setResult] = useState(null);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [analysisStep, setAnalysisStep] = useState(0);
+
+  const analysisSteps = [
+    "Reading the room geometry",
+    "Checking furniture and spatial cues",
+    "Mapping light, tone and materials",
+    "Building your furniture edit",
+  ];
+
   const navigate = useNavigate();
 
   const handleImage = (e) => {
     const file = e.target.files[0];
 
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setErrorMessage("Please choose an image file of your room.");
+      return;
+    }
+
+    if (file.size > 8 * 1024 * 1024) {
+      setErrorMessage("Please upload an image smaller than 8 MB.");
+      return;
+    }
+
     setImage(file);
 
     setPreview(URL.createObjectURL(file));
+
+    setResult(null);
+
+    setErrorMessage("");
   };
+
+  useEffect(() => {
+    if (!loading) {
+      setAnalysisStep(0);
+      return undefined;
+    }
+
+    const timer = setInterval(() => {
+      setAnalysisStep((step) => (step + 1) % analysisSteps.length);
+    }, 1200);
+
+    return () => clearInterval(timer);
+  }, [loading]);
 
   const handleSubmit = async () => {
     if (!image) {
@@ -40,6 +80,8 @@ function AiRoom() {
     try {
       setLoading(true);
 
+      setErrorMessage("");
+
       const formData = new FormData();
 
       formData.append("image", image);
@@ -51,7 +93,13 @@ function AiRoom() {
 
       setResult(data);
     } catch (error) {
-      console.log(error);
+      const message =
+        error.response?.data?.message ||
+        "We could not read this image. Please try a clearer room photo.";
+
+      setErrorMessage(message);
+
+      setResult(null);
     } finally {
       setLoading(false);
     }
@@ -154,39 +202,51 @@ function AiRoom() {
             type="file"
             accept="image/*"
             onChange={handleImage}
-            className="w-full border p-4 rounded-xl"
+            className="w-full rounded-xl border border-[#d8c8bb] bg-[#fbfaf8] p-4"
           />
 
           {preview && (
-            <img
-              src={preview}
-              alt="preview"
-              className="mt-6 w-full max-h-[500px] object-cover rounded-2xl"
-            />
+            <div className="relative mt-6 overflow-hidden rounded-2xl bg-[#211a16]">
+              <img
+                src={preview}
+                alt="Uploaded room preview"
+                className="max-h-[500px] w-full object-cover"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#d9a274]/10 to-transparent" />
+              {loading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-[#211a16]/45 backdrop-blur-[2px]">
+                  <div className="w-[min(88%,520px)] rounded-2xl border border-[#d9a274]/45 bg-[#211a16]/85 p-5 text-white shadow-2xl">
+                    <div className="flex items-center justify-between gap-4 text-xs uppercase tracking-[.18em] text-[#e2b080]">
+                      <span>FurniSelect vision</span><span>SCAN 0{analysisStep + 1}/04</span>
+                    </div>
+                    <div className="mt-5 h-1 overflow-hidden rounded-full bg-white/15"><div className="h-full w-1/3 animate-[scan_1.5s_ease-in-out_infinite] rounded-full bg-[#d9a274]" /></div>
+                    <p className="mt-4 text-sm text-white/80">{analysisSteps[analysisStep]}</p>
+                    <div className="mt-4 grid grid-cols-4 gap-2">{analysisSteps.map((step, index) => <span key={step} className={`h-1 rounded-full ${index <= analysisStep ? "bg-[#d9a274]" : "bg-white/15"}`} />)}</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {errorMessage && (
+            <div className="mt-5 rounded-2xl border border-[#e8b4a9] bg-[#fff5f3] p-4 text-sm text-[#9b3f31]">
+              <p className="font-semibold">This image was not recognised as a room.</p>
+              <p className="mt-1">{errorMessage}</p>
+            </div>
           )}
 
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className={`mt-6 w-full text-white py-4 rounded-2xl text-lg font-semibold transition ${
+            className={`mt-6 w-full rounded-2xl py-4 text-lg font-semibold text-white transition ${
               loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-[#5c3d2e] hover:bg-[#4a3125]"
+                ? "cursor-not-allowed bg-[#a99e95]"
+                : "bg-[#9a6038] hover:bg-[#7d4829]"
             }`}
           >
             Analyze Room
           </button>
         </div>
-
-        {loading && (
-          <div className="mt-10 text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#5c3d2e] mx-auto"></div>
-
-            <p className="mt-4 text-lg text-gray-700">
-              AI analyzing your room...
-            </p>
-          </div>
-        )}
 
         {result && (
           <>
@@ -297,14 +357,14 @@ function AiRoom() {
                         <div className="mt-6 flex gap-3">
                           <button
                             onClick={() => addToCart(product._id)}
-                            className="flex-1 bg-[#5c3d2e] text-white py-3 rounded-xl hover:bg-[#4a3125] transition"
+                            className="min-w-[130px] flex-1 rounded-xl bg-[#9a6038] py-3 text-white transition hover:bg-[#7d4829]"
                           >
                             Add to Cart
                           </button>
 
                           <button
                             onClick={() => buyNow(product._id)}
-                            className="flex-1 border border-[#5c3d2e] text-[#5c3d2e] py-3 rounded-xl hover:bg-[#f3ebe3] transition"
+                            className="min-w-[130px] flex-1 rounded-xl border border-[#9a6038] py-3 text-[#9a6038] transition hover:bg-[#fbf4ef]"
                           >
                             Buy Now
                           </button>

@@ -260,15 +260,15 @@ function Checkout() {
         <div className="space-y-4">
           {cartItems.map((item) => (
             <div key={item._id} className="bg-white rounded-3xl p-5 shadow-sm">
-              <div className="flex items-center gap-5">
+              <div className="flex min-w-0 items-center gap-5">
                 <img
                   src={item.product.image}
                   alt={item.product.title}
                   className="w-28 h-28 object-cover rounded-xl"
                 />
 
-                <div>
-                  <h2 className="text-2xl font-bold">{item.product.title}</h2>
+                <div className="min-w-0">
+                  <h2 className="break-words text-2xl font-bold">{item.product.title}</h2>
 
                   <p>
                     Qty:
@@ -323,7 +323,7 @@ function Checkout() {
 
         <button
           onClick={() => setShowAddressForm(!showAddressForm)}
-          className="mt-4 border-2 border-[#7b4f2c] text-[#7b4f2c] px-6 py-3 rounded-xl"
+          className="mt-4 rounded-xl border-2 border-[#9a6038] px-6 py-3 text-[#9a6038] hover:bg-[#fbf4ef]"
         >
           + Add New Address
         </button>
@@ -387,7 +387,7 @@ function Checkout() {
 
             <button
               onClick={saveAddress}
-              className="bg-[#7b4f2c] text-white py-4 rounded-xl md:col-span-2"
+              className="rounded-xl bg-[#9a6038] py-4 text-white hover:bg-[#7d4829] md:col-span-2"
             >
               Save Address
             </button>
@@ -396,7 +396,7 @@ function Checkout() {
 
         <button
           onClick={handleCheckout}
-          className="mt-6 bg-[#7b4f2c] text-white px-8 py-4 rounded-xl"
+          className="mt-6 rounded-xl bg-[#9a6038] px-8 py-4 text-white hover:bg-[#7d4829]"
         >
           Proceed To Payment
         </button>

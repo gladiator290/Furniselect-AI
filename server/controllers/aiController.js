@@ -104,6 +104,15 @@ const analyzeRoom = async (req, res) => {
 
     console.log(error);
 
+    if (error.response?.status === 422) {
+      return res.status(422).json({
+        code: error.response.data?.detail?.code || "NOT_A_ROOM",
+        message:
+          error.response.data?.detail?.message ||
+          "This does not look like a room image. Please upload a room photo.",
+      });
+    }
+
     res.status(500).json({
       message: "AI analysis failed",
     });

@@ -1,271 +1,41 @@
-import {
-  Link,
-  useLocation,
-} from "react-router-dom";
-
-import { useEffect, useState } from "react";
+import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 
 function Navbar() {
-
-  const [showMenu, setShowMenu] =
-    useState(false);
-
-  const userInfo = JSON.parse(
-    localStorage.getItem("userInfo")
-  );
-
+  const [open, setOpen] = useState(false);
   const location = useLocation();
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') || 'null');
+  const isAdmin = userInfo?.role === 'admin';
+  const viewMode = localStorage.getItem('viewMode') || 'customer';
+  const adminMode = isAdmin && viewMode === 'admin';
 
-  const isAdmin =
-    userInfo?.role === "admin";
+  const logout = () => { localStorage.clear(); window.location.href = '/'; };
+  const nav = adminMode
+    ? [['/admin', 'Overview'], ['/admin/products', 'Products'], ['/admin/orders', 'Orders'], ['/admin/analytics', 'Analytics']]
+    : [['/', 'Home'], ['/products', 'Collection'], ['/ai-room', 'AI Studio']];
 
-  const viewMode =
-    localStorage.getItem("viewMode") ||
-    "customer";
-
-  useEffect(() => {
-
-    setShowMenu(false);
-
-  }, [location.pathname]);
-
-  const logoutHandler = () => {
-
-    localStorage.removeItem("token");
-
-    localStorage.removeItem(
-      "userInfo"
-    );
-
-    localStorage.removeItem(
-      "viewMode"
-    );
-
-    window.location.href = "/";
-  };
-
-  const switchView = () => {
-
-    const newMode =
-      viewMode === "admin"
-        ? "customer"
-        : "admin";
-
-    localStorage.setItem(
-      "viewMode",
-      newMode
-    );
-
-    if (newMode === "admin") {
-
-      window.location.href =
-        "/admin";
-
-    } else {
-
-      window.location.href = "/";
-    }
-  };
-
-  return (
-
-    <nav className="bg-[#efe7dc] shadow-sm border-b sticky top-0 z-50">
-
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-        <Link
-          to={
-            isAdmin &&
-            viewMode === "admin"
-              ? "/admin"
-              : "/"
-          }
-          className="text-2xl font-bold tracking-wide text-black"
-        >
-          FurniSelect
-        </Link>
-
-        <div className="flex items-center gap-8 text-[15px] font-medium">
-
-          {(!isAdmin ||
-            viewMode === "customer") && (
-            <>
-              <Link
-                to="/"
-                className="hover:text-gray-500 transition"
-              >
-                Home
-              </Link>
-
-              <Link
-                to="/products"
-                className="hover:text-gray-500 transition"
-              >
-                Products
-              </Link>
-
-              <Link
-                to="/ai-room"
-                className="hover:text-gray-500 transition"
-              >
-                AI Room
-              </Link>
-
-              <Link
-                to="/cart"
-                className="hover:text-gray-500 transition"
-              >
-                Cart
-              </Link>
-            </>
-          )}
-
-          {isAdmin &&
-            viewMode === "admin" && (
-              <>
-                <Link
-                  to="/admin"
-                  className="hover:text-gray-500 transition"
-                >
-                  Dashboard
-                </Link>
-
-                <Link
-                  to="/admin/products"
-                  className="hover:text-gray-500 transition"
-                >
-                  Products
-                </Link>
-
-                <Link
-                  to="/admin/orders"
-                  className="hover:text-gray-500 transition"
-                >
-                  Orders
-                </Link>
-              </>
-            )}
-
-          {!userInfo ? (
-
-            <>
-              <Link
-                to="/login"
-                className="bg-[#7b4f2c] text-white px-5 py-2 rounded-lg hover:bg-[#5c3b1e] transition"
-              >
-                Login
-              </Link>
-
-              <Link
-                to="/register"
-                className="hover:text-gray-500 transition"
-              >
-                Register
-              </Link>
-            </>
-
-          ) : (
-
-            <div className="flex items-center gap-4">
-
-              {isAdmin && (
-
-                <button
-                  onClick={switchView}
-                  className={`px-5 py-2 rounded-full font-semibold transition-all duration-300 shadow-sm ${
-                    viewMode === "admin"
-                      ? "bg-[#7b4f2c] text-white"
-                      : "bg-white border border-[#7b4f2c] text-[#7b4f2c]"
-                  }`}
-                >
-
-                  {viewMode === "admin"
-                    ? "👤 Customer View"
-                    : "⚙️ Admin View"}
-
-                </button>
-
-              )}
-
-              <div className="relative">
-
-                <button
-                  onClick={() =>
-                    setShowMenu(
-                      !showMenu
-                    )
-                  }
-                  className="w-10 h-10 rounded-full bg-[#7b4f2c] text-white font-bold flex items-center justify-center"
-                >
-
-                  {userInfo.name
-                    ?.charAt(0)
-                    ?.toUpperCase()}
-
-                </button>
-
-                {showMenu && (
-
-                  <div className="absolute right-0 mt-3 w-52 bg-white rounded-2xl shadow-lg border overflow-hidden">
-
-                    <div className="px-4 py-3 border-b">
-
-                      <p className="font-semibold">
-                        {userInfo.name}
-                      </p>
-
-                      <p className="text-sm text-gray-500">
-                        {userInfo.email}
-                      </p>
-
-                    </div>
-
-                    <Link
-                      to="/profile"
-                      className="block px-4 py-3 hover:bg-gray-100"
-                    >
-                      My Profile
-                    </Link>
-
-                    <Link
-                      to="/orders"
-                      className="block px-4 py-3 hover:bg-gray-100"
-                    >
-                      My Orders
-                    </Link>
-
-                    <Link
-                      to="/wishlist"
-                      className="block px-4 py-3 hover:bg-gray-100"
-                    >
-                      Wishlist
-                    </Link>
-
-                    <button
-                      onClick={
-                        logoutHandler
-                      }
-                      className="w-full text-left px-4 py-3 text-red-500 hover:bg-gray-100"
-                    >
-                      Logout
-                    </button>
-
-                  </div>
-
-                )}
-
-              </div>
-
-            </div>
-
-          )}
-
-        </div>
-
+  return <header className="sticky top-0 z-50 border-b border-white/10 bg-[#211a16] text-white shadow-[0_8px_30px_rgba(49,29,18,.16)]">
+    <div className="mx-auto flex h-[76px] max-w-[1320px] items-center justify-between px-5 lg:px-8">
+      <Link to={adminMode ? '/admin' : '/'} className="focus-ring flex items-center gap-3" aria-label="FurniSelect home">
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#d39a69] text-sm font-bold text-[#3b2419] shadow-inner">F</span>
+        <span className="text-[1.08rem] font-bold tracking-[-.03em]">Furni<span className="font-normal text-[#d9a274]">Select</span></span>
+      </Link>
+      <nav className="hidden items-center gap-8 lg:flex">
+        {nav.map(([href, label]) => <Link key={href} to={href} className={`focus-ring text-sm font-medium transition ${location.pathname === href ? 'text-[#e0ae82]' : 'text-white/65 hover:text-white'}`}>{label}</Link>)}
+      </nav>
+      <div className="flex items-center gap-3">
+        {!userInfo ? <><Link to="/login" className="hidden px-3 py-2 text-sm font-semibold text-white/65 hover:text-white sm:block">Sign in</Link><Link to="/register" className="rounded-full bg-[#d59d6c] px-4 py-2.5 text-sm font-semibold text-[#3b2419] shadow-[0_8px_22px_rgba(0,0,0,.15)] transition hover:bg-[#e1b181]">Get started</Link></> : <>
+          {isAdmin && <button onClick={() => { localStorage.setItem('viewMode', adminMode ? 'customer' : 'admin'); window.location.href = adminMode ? '/' : '/admin'; }} className="hidden rounded-full border border-white/20 px-3 py-2 text-xs font-semibold text-white/80 sm:block">{adminMode ? 'Customer view' : 'Admin view'}</button>}
+          <button onClick={() => setOpen(!open)} className="focus-ring flex h-10 w-10 items-center justify-center rounded-full bg-[#d9a274] text-sm font-bold text-[#3b2419]">{userInfo.name?.[0]?.toUpperCase()}</button>
+          {open && <div className="absolute right-5 top-[68px] w-60 overflow-hidden rounded-2xl border border-[#e7dfd6] bg-white shadow-2xl lg:right-8">
+            <div className="border-b border-[#eee7df] px-4 py-4"><p className="font-semibold">{userInfo.name}</p><p className="mt-1 truncate text-xs text-[#897e75]">{userInfo.email}</p></div>
+            <Link to="/profile" className="block px-4 py-3 text-sm hover:bg-[#f7f3ee]">My profile</Link><Link to="/orders" className="block px-4 py-3 text-sm hover:bg-[#f7f3ee]">My orders</Link><button onClick={logout} className="w-full border-t border-[#eee7df] px-4 py-3 text-left text-sm text-red-600 hover:bg-red-50">Sign out</button>
+          </div>}
+        </>}
+        <button onClick={() => setOpen(!open)} className="ml-1 rounded-lg p-2 text-[#e1b181] lg:hidden" aria-label="Toggle menu">☰</button>
       </div>
-
-    </nav>
-  );
+    </div>
+    {open && <div className="border-t border-white/10 bg-[#3b2419] px-5 py-4 lg:hidden">{nav.map(([href, label]) => <Link key={href} to={href} className="block border-b border-white/10 py-3 text-sm font-medium text-white/80">{label}</Link>)}</div>}
+  </header>;
 }
-
 export default Navbar;
