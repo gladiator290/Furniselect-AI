@@ -39,8 +39,10 @@ def _scene_features(image):
         & (green > blue * 1.08)
     )
     skin_ratio = float(skin_mask.mean())
+    upper_skin_ratio = float(skin_mask[:96].mean())
+    lower_skin_ratio = float(skin_mask[96:].mean())
 
-    return edge_energy, block_spread, vertical_split, color_spread, skin_ratio
+    return edge_energy, block_spread, vertical_split, color_spread, skin_ratio, upper_skin_ratio, lower_skin_ratio
 
 
 def detect_room(image):
@@ -48,9 +50,23 @@ def detect_room(image):
     if width < 240 or height < 180:
         return {"is_room": False, "room_type": "Not a room", "confidence": 0, "reason": "Image is too small"}
 
-    edge_energy, block_spread, vertical_split, color_spread, skin_ratio = _scene_features(image)
+    (
+        edge_energy,
+        block_spread,
+        vertical_split,
+        color_spread,
+        skin_ratio,
+        upper_skin_ratio,
+        lower_skin_ratio,
+    ) = _scene_features(image)
 
-    if skin_ratio >= 0.035:
+    portrait_signal = (
+        skin_ratio >= 0.065
+        and upper_skin_ratio >= 0.045
+        and upper_skin_ratio > lower_skin_ratio * 1.25
+    )
+
+    if portrait_signal:
         return {
             "is_room": False,
             "room_type": "Not a room",
