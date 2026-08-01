@@ -11,7 +11,7 @@ function Navbar() {
 
   const logout = () => { localStorage.clear(); window.location.href = '/'; };
   const nav = adminMode
-    ? [['/admin', 'Overview'], ['/admin/products', 'Products'], ['/admin/orders', 'Orders'], ['/admin/analytics', 'Analytics']]
+    ? [['/admin', 'Overview'], ['/admin/products', 'Products'], ['/admin/orders', 'Orders'], ['/admin/analytics', 'Analytics'], ['/admin/users', 'Customers'], ['/admin/reviews', 'Reviews'], ['/admin/settings', 'Settings']]
     : [['/', 'Home'], ['/products', 'Collection'], ['/ai-room', 'AI Studio']];
 
   return <header className="sticky top-0 z-50 border-b border-white/10 bg-[#211a16] text-white shadow-[0_8px_30px_rgba(49,29,18,.16)]">

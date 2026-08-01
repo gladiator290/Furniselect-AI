@@ -24,6 +24,9 @@ import AdminAddProduct from "./pages/AdminAddProduct";
 import AdminEditProduct from "./pages/AdminEditProduct";
 import AdminOrders from "./pages/AdminOrders";
 import AdminAnalytics from "./pages/AdminAnalytics";
+import AdminUsers from "./pages/AdminUsers";
+import AdminReviews from "./pages/AdminReviews";
+import AdminSettings from "./pages/AdminSettings";
 
 function ScrollToTop() {
   const { pathname, search } = useLocation();
@@ -120,6 +123,9 @@ function App() {
             </AdminRoute>
           }
         />
+        <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
+        <Route path="/admin/reviews" element={<AdminRoute><AdminReviews /></AdminRoute>} />
+        <Route path="/admin/settings" element={<AdminRoute><AdminSettings /></AdminRoute>} />
       </Routes>
 
       <Footer />

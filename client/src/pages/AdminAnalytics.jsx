@@ -87,7 +87,7 @@ function AdminAnalytics() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-[#f6f1ea]">
+    <div className="admin-theme min-h-screen bg-[#f6f1ea]">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <p className="text-[#8a6a50] uppercase tracking-[4px] font-semibold">

@@ -130,14 +130,14 @@ function AdminEditProduct() {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="admin-theme max-w-7xl mx-auto px-6 py-20">
         <h1 className="text-4xl font-bold">Loading...</h1>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12">
+    <div className="admin-theme max-w-4xl mx-auto px-6 py-12">
       <h1 className="text-5xl font-bold mb-10">Edit Product</h1>
 
       <form

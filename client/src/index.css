@@ -67,3 +67,22 @@ h1, h2, h3, p { overflow-wrap: anywhere; }
 .analysis-image { transition: filter .5s ease, transform .8s ease; }.analysis-image.is-scanning { filter: saturate(.72) contrast(1.08) brightness(.88); transform: scale(1.015); }
 @keyframes xray-scan { 0% { transform: translateY(0); opacity: 0; } 12% { opacity: 1; } 78% { opacity: 1; } 100% { transform: translateY(720px); opacity: 0; } }
 @keyframes crosshair-pulse { 0%, 100% { transform: translate(-50%, -50%) scale(.9); opacity: .55; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } }
+.admin-theme { color: var(--ink); }
+.admin-theme h1, .admin-theme h2, .admin-theme h3 { letter-spacing: -.035em; }
+.admin-theme h1 { font-family: 'Playfair Display', Georgia, serif; }
+.admin-theme [class~="bg-white"] { border: 1px solid #eadfd5; box-shadow: 0 14px 38px rgba(73, 48, 32, .06); }
+.admin-theme input, .admin-theme textarea, .admin-theme select { border-color: #d9cbbf; background: #fffdfa; color: var(--ink); outline: none; transition: border-color .2s, box-shadow .2s; }
+.admin-theme input:focus, .admin-theme textarea:focus, .admin-theme select:focus { border-color: #b9794d; box-shadow: 0 0 0 4px rgba(185,121,77,.12); }
+.admin-theme button[class*="bg-black"], .admin-theme button[class*="bg-blue"], .admin-theme button[class*="bg-green"], .admin-theme button[class*="bg-yellow"], .admin-theme button[class*="bg-orange"] { background: #9a6038 !important; color: white; }
+.admin-theme button[class*="bg-black"]:hover, .admin-theme button[class*="bg-blue"]:hover, .admin-theme button[class*="bg-green"]:hover { background: #7d4829 !important; }
+.admin-theme a[class*="bg-green"], .admin-theme a[class*="bg-blue"] { background: #9a6038 !important; color: white; }
+.admin-theme a[class*="bg-green"]:hover, .admin-theme a[class*="bg-blue"]:hover { background: #7d4829 !important; }
+.admin-theme .overflow-x-auto { border: 1px solid #eadfd5; border-radius: 1.25rem; }
+@media (max-width: 640px) {
+  .admin-theme { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .admin-theme h1 { font-size: 2.5rem !important; line-height: 1.05; }
+  .admin-theme h2 { font-size: 1.65rem !important; }
+  .admin-theme [class*="grid-cols-5"], .admin-theme [class*="grid-cols-6"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .admin-theme [class*="text-5xl"] { font-size: 2.25rem; }
+  .admin-theme button, .admin-theme a[class*="px-"] { max-width: 100%; }
+}

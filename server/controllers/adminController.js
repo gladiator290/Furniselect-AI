@@ -1,6 +1,7 @@
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 const User = require("../models/User");
+const SiteSettings = require("../models/SiteSettings");
 
 const getDashboardStats = async (req, res) => {
   try {
@@ -481,7 +482,68 @@ const getAnalytics = async (req, res) => {
   }
 };
 
+const getAdminUsers = async (req, res) => {
+  try {
+    const users = await User.find({}).select("-password").sort({ createdAt: -1 });
+    res.status(200).json(users);
+  } catch (error) { res.status(500).json({ message: error.message }); }
+};
+
+const updateUserRole = async (req, res) => {
+  try {
+    const allowedRoles = ["customer", "salesman", "admin"];
+    if (!allowedRoles.includes(req.body.role)) return res.status(400).json({ message: "Invalid user role" });
+    if (req.params.id === req.user._id.toString() && req.body.role !== "admin") return res.status(400).json({ message: "You cannot remove your own admin access" });
+    const user = await User.findByIdAndUpdate(req.params.id, { role: req.body.role }, { new: true, runValidators: true }).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.status(200).json(user);
+  } catch (error) { res.status(500).json({ message: error.message }); }
+};
+
+const getAdminReviews = async (req, res) => {
+  try {
+    const products = await Product.find({ "reviews.0": { $exists: true } }).select("title image reviews").populate("reviews.user", "name email");
+    const reviews = products.flatMap((product) => product.reviews.map((review) => ({ _id: review._id, productId: product._id, productTitle: product.title, productImage: product.image, name: review.name || review.user?.name || "Customer", email: review.user?.email || "", rating: review.rating, comment: review.comment, createdAt: review.createdAt })));
+    res.status(200).json(reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+  } catch (error) { res.status(500).json({ message: error.message }); }
+};
+
+const deleteAdminReview = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.productId);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+    const before = product.reviews.length;
+    product.reviews = product.reviews.filter((review) => review._id.toString() !== req.params.reviewId);
+    if (product.reviews.length === before) return res.status(404).json({ message: "Review not found" });
+    product.numReviews = product.reviews.length;
+    product.averageRating = product.numReviews ? product.reviews.reduce((total, review) => total + review.rating, 0) / product.numReviews : 0;
+    await product.save();
+    res.status(200).json({ message: "Review removed" });
+  } catch (error) { res.status(500).json({ message: error.message }); }
+};
+
+const getSiteSettings = async (req, res) => {
+  try {
+    const settings = await SiteSettings.findOneAndUpdate({ key: "store" }, {}, { new: true, upsert: true, setDefaultsOnInsert: true });
+    res.status(200).json(settings);
+  } catch (error) { res.status(500).json({ message: error.message }); }
+};
+
+const updateSiteSettings = async (req, res) => {
+  try {
+    const updates = { storeName: String(req.body.storeName || "FurniSelect").trim(), supportEmail: String(req.body.supportEmail || "").trim(), supportPhone: String(req.body.supportPhone || "").trim(), announcement: String(req.body.announcement || "").trim(), lowStockThreshold: Math.max(0, Number(req.body.lowStockThreshold) || 0) };
+    const settings = await SiteSettings.findOneAndUpdate({ key: "store" }, updates, { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true });
+    res.status(200).json(settings);
+  } catch (error) { res.status(500).json({ message: error.message }); }
+};
+
 module.exports = {
   getDashboardStats,
   getAnalytics,
+  getAdminUsers,
+  updateUserRole,
+  getAdminReviews,
+  deleteAdminReview,
+  getSiteSettings,
+  updateSiteSettings,
 };

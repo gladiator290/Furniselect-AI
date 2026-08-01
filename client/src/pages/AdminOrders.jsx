@@ -383,7 +383,7 @@ function AdminOrders() {
 
       return (
 
-    <div className="max-w-7xl mx-auto px-6 py-12">
+    <div className="admin-theme max-w-7xl mx-auto px-6 py-12">
 
       <div className="flex justify-between items-center mb-10">
 

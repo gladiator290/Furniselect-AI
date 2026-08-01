@@ -67,7 +67,7 @@ function AdminDashboard() {
 
   return (
 
-    <div className="min-h-screen bg-[#f6f1ea]">
+    <div className="admin-theme min-h-screen bg-[#f6f1ea]">
 
       <div className="max-w-7xl mx-auto px-6 py-12">
 
