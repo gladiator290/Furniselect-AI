@@ -78,6 +78,15 @@ h1, h2, h3, p { overflow-wrap: anywhere; }
 .admin-theme a[class*="bg-green"], .admin-theme a[class*="bg-blue"] { background: #9a6038 !important; color: white; }
 .admin-theme a[class*="bg-green"]:hover, .admin-theme a[class*="bg-blue"]:hover { background: #7d4829 !important; }
 .admin-theme .overflow-x-auto { border: 1px solid #eadfd5; border-radius: 1.25rem; }
+.admin-theme .p-8 { padding: 1.35rem !important; }
+.admin-theme .p-6 { padding: 1.05rem !important; }
+.admin-theme .rounded-3xl { border-radius: 1.35rem !important; }
+.admin-theme [class*="bg-orange-500"] { background: #fff3e7 !important; color: #a85e25 !important; }
+.admin-theme [class*="bg-yellow-500"] { background: #fff8df !important; color: #9a6a00 !important; }
+.admin-theme [class*="bg-blue-500"] { background: #edf4ff !important; color: #3f6fae !important; }
+.admin-theme [class*="bg-red-500"] { background: #fff0ee !important; color: #b4493d !important; }
+.admin-theme [class*="bg-purple-500"] { background: #f5efff !important; color: #7b54a9 !important; }
+.admin-theme [class*="bg-green-500"], .admin-theme [class*="from-green-500"] { background: #edf8f1 !important; color: #3e8557 !important; }
 @media (max-width: 640px) {
   .admin-theme { padding-left: 1rem !important; padding-right: 1rem !important; }
   .admin-theme h1 { font-size: 2.5rem !important; line-height: 1.05; }
