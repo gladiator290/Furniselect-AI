@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from PIL import Image
 import numpy as np
 import io
+import time
 from sklearn.cluster import KMeans
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -18,6 +19,8 @@ from room_detector import detect_room
 
 app = FastAPI()
 
+SERVICE_STARTED_AT = time.time()
+
 
 
 app.add_middleware(
@@ -29,6 +32,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/health")
+@app.get("/healthz")
+def health():
+    return {
+        "status": "ok",
+        "service": "furniselect-ai",
+        "uptime_seconds": round(time.time() - SERVICE_STARTED_AT, 2),
+        "timestamp": time.time(),
+    }
+
 
 @app.get("/")
 def home():
